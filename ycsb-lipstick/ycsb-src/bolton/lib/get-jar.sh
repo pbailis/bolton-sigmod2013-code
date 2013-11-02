@@ -1,0 +1,1 @@
+cp ../../../../sigmod-lipstick/out/artifacts/bolton_cassandra/lipstick.jar .

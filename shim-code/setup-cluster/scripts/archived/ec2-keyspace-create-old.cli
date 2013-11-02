@@ -1,0 +1,11 @@
+create keyspace lipstick
+WITH placement_strategy = 'NetworkTopologyStrategy'
+AND strategy_options={us-east:2,us-west:2};
+
+use lipstick;
+create column family lipstickkvs with comparator = UTF8Type and  
+        column_metadata =
+        [
+        {column_name: key, validation_class: UTF8Type},
+        {column_name: value, validation_class: UTF8Type, index_type: KEYS},
+        ];

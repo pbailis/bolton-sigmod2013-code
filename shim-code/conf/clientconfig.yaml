@@ -1,0 +1,26 @@
+
+#Used for client experiments
+cops.keysperkeygroup: 512
+cops.numservers: 8
+cops.threads.per.server: 8
+cops.clients.per.server: 1024
+cops.keygroupvariance: 1
+cops.putgetratio: .5
+cops.numoperations: 4000000000
+cops.clientid: 1
+
+#note : only used if record.visibilities is false!
+cops.valuesize: 140
+cops.print.sleeptime: 1000
+
+
+#should be from 0 to N-1 contiguous
+server.number: 0
+
+#used for exponential distribution
+
+#mean of exponential distribution
+cops.lambda.reply.length: 10.0
+cops.probability.reply: .35
+
+cops.record.visibilities: false

@@ -1,0 +1,2 @@
+drop columnfamily lipstickkvs;
+drop keyspace lipstick;

@@ -1,0 +1,6 @@
+
+Unfortunately, this code relies on the IntellIJ build system.
+
+To avoid GPL issues, I have removed all code relating to the KyotoCabinet local store.
+
+--pbailis

@@ -1,0 +1,1 @@
+java -Dlipstick.config="conf/lipstick.yaml" -Dclient.config="conf/clientconfig.yaml" -Xms64m -Xmx1024G -jar out/artifacts/simpleserver/lipstick.jar

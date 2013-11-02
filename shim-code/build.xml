@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lipstick" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.home.1.6" value="/usr/lib/jvm/java-6-sun"/>
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="lib/deploy.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javaws.jar"/>
+      <include name="lib/jce.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/management-agent.jar"/>
+      <include name="lib/plugin.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="../Classes/alt-rt.jar"/>
+      <include name="../Classes/alt-string.jar"/>
+      <include name="../Classes/charsets.jar"/>
+      <include name="../Classes/classes.jar"/>
+      <include name="../Classes/jsse.jar"/>
+      <include name="../Classes/ui.jar"/>
+      <include name="lib/ext/apple_provider.jar"/>
+      <include name="lib/ext/dnsns.jar"/>
+      <include name="lib/ext/localedata.jar"/>
+      <include name="lib/ext/sunjce_provider.jar"/>
+      <include name="lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.aws-sdk.classpath">
+    <pathelement location="${basedir}/lib/aws-java-sdk-mod.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module lipstick -->
+  
+  <dirname property="module.lipstick.basedir" file="${ant.file}"/>
+  
+  <property name="jdk.home.1.6" value="/usr/lib/jvm/java-6-sun"/>
+  <property name="project.jdk.home" value="/usr/lib/jvm/java-6-sun"/>
+  <property name="module.jdk.home.lipstick" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.lipstick" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.lipstick" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.lipstick" value="${compiler.args}"/>
+  
+  <property name="lipstick.output.dir" value="${module.lipstick.basedir}/out/production/lipstick"/>
+  <property name="lipstick.testoutput.dir" value="${module.lipstick.basedir}/out/test/lipstick"/>
+  
+  <path id="lipstick.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="lipstick.module.production.classpath">
+    <path refid="${module.jdk.classpath.lipstick}"/>
+    <pathelement location="${basedir}/lib/snakeyaml-1.10.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-api-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/libthrift-0.6.1.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.8.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-ext-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-simple-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/commons-codec-1.6.jar"/>
+    <path refid="library.aws-sdk.classpath"/>
+    <pathelement location="${basedir}/lib/hector-core-1.0-4.jar"/>
+    <pathelement location="${basedir}/lib/uber-hector-core-1.0-5-SNAPSHOT.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-thrift-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-clientutil-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/protobuf-2.4.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-math3-3.0.jar"/>
+    <pathelement location="${basedir}/lib/kyotocabinet.jar"/>
+  </path>
+  
+  <path id="lipstick.runtime.production.module.classpath">
+    <pathelement location="${lipstick.output.dir}"/>
+    <pathelement location="${basedir}/lib/snakeyaml-1.10.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-api-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/libthrift-0.6.1.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.8.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-ext-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-simple-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/commons-codec-1.6.jar"/>
+    <path refid="library.aws-sdk.classpath"/>
+    <pathelement location="${basedir}/lib/hector-core-1.0-4.jar"/>
+    <pathelement location="${basedir}/lib/uber-hector-core-1.0-5-SNAPSHOT.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-thrift-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-clientutil-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/protobuf-2.4.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-math3-3.0.jar"/>
+    <pathelement location="${basedir}/lib/kyotocabinet.jar"/>
+  </path>
+  
+  <path id="lipstick.module.classpath">
+    <path refid="${module.jdk.classpath.lipstick}"/>
+    <pathelement location="${lipstick.output.dir}"/>
+    <pathelement location="${basedir}/lib/snakeyaml-1.10.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-api-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/libthrift-0.6.1.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.8.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-ext-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-simple-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/commons-codec-1.6.jar"/>
+    <path refid="library.aws-sdk.classpath"/>
+    <pathelement location="${basedir}/lib/hector-core-1.0-4.jar"/>
+    <pathelement location="${basedir}/lib/uber-hector-core-1.0-5-SNAPSHOT.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-thrift-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-clientutil-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/protobuf-2.4.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-math3-3.0.jar"/>
+    <pathelement location="${basedir}/lib/kyotocabinet.jar"/>
+  </path>
+  
+  <path id="lipstick.runtime.module.classpath">
+    <pathelement location="${lipstick.testoutput.dir}"/>
+    <pathelement location="${lipstick.output.dir}"/>
+    <pathelement location="${basedir}/lib/snakeyaml-1.10.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-api-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/libthrift-0.6.1.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.8.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-ext-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-simple-1.6.4.jar"/>
+    <pathelement location="${basedir}/lib/commons-codec-1.6.jar"/>
+    <path refid="library.aws-sdk.classpath"/>
+    <pathelement location="${basedir}/lib/hector-core-1.0-4.jar"/>
+    <pathelement location="${basedir}/lib/uber-hector-core-1.0-5-SNAPSHOT.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-thrift-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/apache-cassandra-clientutil-1.0.8.jar"/>
+    <pathelement location="${basedir}/lib/protobuf-2.4.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-math3-3.0.jar"/>
+    <pathelement location="${basedir}/lib/kyotocabinet.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.lipstick">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.lipstick">
+    <patternset refid="excluded.from.module.lipstick"/>
+  </patternset>
+  
+  <path id="lipstick.module.sourcepath">
+    <dirset dir="${module.lipstick.basedir}">
+      <include name="src"/>
+      <include name="demo"/>
+      <include name="test"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.lipstick" depends="compile.module.lipstick.production,compile.module.lipstick.tests" description="Compile module lipstick"/>
+  
+  <target name="compile.module.lipstick.production" description="Compile module lipstick; production classes">
+    <mkdir dir="${lipstick.output.dir}"/>
+    <javac destdir="${lipstick.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.lipstick}/javac">
+      <compilerarg line="${compiler.args.lipstick}"/>
+      <bootclasspath refid="lipstick.module.bootclasspath"/>
+      <classpath refid="lipstick.module.production.classpath"/>
+      <src refid="lipstick.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.lipstick"/>
+    </javac>
+    
+    <copy todir="${lipstick.output.dir}">
+      <fileset dir="${module.lipstick.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.lipstick.basedir}/demo">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.lipstick.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.lipstick.tests" depends="compile.module.lipstick.production" description="compile module lipstick; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.lipstick" description="cleanup module">
+    <delete dir="${lipstick.output.dir}"/>
+    <delete dir="${lipstick.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.lipstick" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.lipstick" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.copspotential" value="${basedir}/out/artifacts/copspotential"/>
+    <property name="artifact.output.copsexplicit" value="${basedir}/out/artifacts/copsexplicit"/>
+    <property name="artifact.output.simpleserver" value="${basedir}/out/artifacts/simpleserver"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.lipstick.jar" value="${artifacts.temp.dir}/lipstick.jar"/>
+    <property name="temp.jar.path.lipstick.jar2" value="${artifacts.temp.dir}/1/lipstick.jar"/>
+    <mkdir dir="${artifacts.temp.dir}/1"/>
+  </target>
+  
+  <target name="artifact.copspotential" depends="init.artifacts, compile.module.lipstick" description="Build &apos;copspotential&apos; artifact">
+    <property name="artifact.temp.output.copspotential" value="${artifacts.temp.dir}/copspotential"/>
+    <mkdir dir="${artifact.temp.output.copspotential}"/>
+    <jar destfile="${temp.jar.path.lipstick.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/src/cops-manifest/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset dir="${lipstick.output.dir}"/>
+      <zipfileset src="${basedir}/lib/apache-cassandra-thrift-1.0.8.jar"/>
+      <zipfileset src="${basedir}/lib/apache-cassandra-clientutil-1.0.8.jar"/>
+      <zipfileset src="${basedir}/lib/commons-lang-2.6.jar"/>
+      <zipfileset src="${basedir}/lib/guava-11.0.2.jar"/>      
+      <zipfileset src="${basedir}/lib/snakeyaml-1.10.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-api-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/commons-math3-3.0.jar"/>
+      <zipfileset src="${basedir}/lib/commons-codec-1.6.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-ext-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/libthrift-0.6.1.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-simple-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/kyotocabinet.jar"/>
+      <zipfileset src="${basedir}/lib/protobuf-2.4.1.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.lipstick.jar}" tofile="${artifact.temp.output.copspotential}/lipstick.jar"/>
+  </target>
+  
+
+  <target name="artifact.copsexplicit" depends="init.artifacts, compile.module.lipstick" description="Build &apos;copsexplicit&apos; artifact">
+    <property name="artifact.temp.output.copsexplicit" value="${artifacts.temp.dir}/copsexplicit"/>
+    <mkdir dir="${artifact.temp.output.copsexplicit}"/>
+    <jar destfile="${temp.jar.path.lipstick.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/src/cops-explicit-manifest/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset dir="${lipstick.output.dir}"/>
+      <zipfileset src="${basedir}/lib/apache-cassandra-thrift-1.0.8.jar"/>
+      <zipfileset src="${basedir}/lib/apache-cassandra-clientutil-1.0.8.jar"/>
+      <zipfileset src="${basedir}/lib/commons-lang-2.6.jar"/>
+      <zipfileset src="${basedir}/lib/guava-11.0.2.jar"/>      
+      <zipfileset src="${basedir}/lib/snakeyaml-1.10.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-api-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/commons-math3-3.0.jar"/>
+      <zipfileset src="${basedir}/lib/commons-codec-1.6.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-ext-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/libthrift-0.6.1.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-simple-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/kyotocabinet.jar"/>
+      <zipfileset src="${basedir}/lib/protobuf-2.4.1.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.lipstick.jar}" tofile="${artifact.temp.output.copsexplicit}/lipstick.jar"/>
+  </target>
+  
+
+  <target name="artifact.simpleserver" depends="init.artifacts, compile.module.lipstick" description="Build &apos;simpleserver&apos; artifact">
+    <property name="artifact.temp.output.simpleserver" value="${artifacts.temp.dir}/simpleserver"/>
+    <mkdir dir="${artifact.temp.output.simpleserver}"/>
+    <jar destfile="${temp.jar.path.lipstick.jar2}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/src/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset dir="${lipstick.output.dir}"/>
+      <zipfileset src="${basedir}/lib/slf4j-simple-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/snakeyaml-1.10.jar"/>
+      <zipfileset src="${basedir}/lib/libthrift-0.6.1.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-ext-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/slf4j-api-1.6.4.jar"/>
+      <zipfileset src="${basedir}/lib/commons-codec-1.6.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.lipstick.jar2}" tofile="${artifact.temp.output.simpleserver}/lipstick.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.copspotential, artifact.simpleserver" description="Build all artifacts">
+    <mkdir dir="${artifact.output.copspotential}"/>
+    <copy todir="${artifact.output.copspotential}">
+      <fileset dir="${artifact.temp.output.copspotential}"/>
+    </copy>
+
+    <mkdir dir="${artifact.output.copsexplicit}"/>
+    <copy todir="${artifact.output.copsexplicit}">
+      <fileset dir="${artifact.temp.output.copsexplicit}"/>
+    </copy>
+
+    <mkdir dir="${artifact.output.simpleserver}"/>
+    <copy todir="${artifact.output.simpleserver}">
+      <fileset dir="${artifact.temp.output.simpleserver}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

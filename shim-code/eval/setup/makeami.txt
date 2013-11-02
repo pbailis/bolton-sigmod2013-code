@@ -1,0 +1,120 @@
+
+#us east 
+
+ec2-run-instances ami-7268b01b -n 1 -g 'lipstick' --t m1.large --region us-east-1 -k 'suna-real' -b '/dev/sdb=ephemeral0' -b '/dev/sdc=ephemeral1'
+
+#us west
+
+ec2-run-instances ami-ecf17ddc -n 1 -g 'lipstick' --t m1.large --region us-west-2 -k 'suna-real' -b '/dev/sdb=ephemeral0' -b '/dev/sdc=ephemeral1'
+
+ec2-describe-instances
+
+ssh ubuntu@ec2-50-17-107-27.compute-1.amazonaws.com
+
+----
+
+
+apt-get install mdadm xfsprogs
+
+umount /mnt
+yes | mdadm --create /dev/md0 --level=0 -c256 --raid-devices=2 /dev/xvdb /dev/xvdc
+echo 'DEVICE /dev/xvdb /dev/xvdc' > /etc/mdadm.conf
+
+mdadm --detail --scan >> /etc/mdadm.conf
+
+blockdev --setra 65536 /dev/md0
+mkfs.xfs -f /dev/md0
+mkdir -p /mnt/md0 && mount -t xfs -o noatime /dev/md0 /mnt/md0
+cd /mnt/md0
+
+perl -ne 'print if $_ !~ /mnt/' /etc/fstab > /etc/fstab.2
+echo '#/dev/md0  /mnt  xfs    defaults 0 0' >> /etc/fstab.2
+mv /etc/fstab.2 /etc/fstab
+cd /root
+
+sudo apt-add-repository ppa:flexiondotorg/java
+sudo apt-get update
+sudo apt-get install sun-java6-jre sun-java6-plugin sun-java6-jdk emacs gcc g++ zlibc zlib1g zlib1g-dev make ant git
+
+wget http://apache.mirrors.pair.com/cassandra/1.0.9/apache-cassandra-1.0.9-bin.tar.gz
+tar -xvf apache-cassandra-1.0.9-bin.tar.gz
+
+
+wget http://fallabs.com/kyotocabinet/pkg/kyotocabinet-1.2.74.tar.gz
+tar -xvf kyotocabinet-1.2.74.tar.gz 
+
+cd kyotocabinet-1*
+./configure
+make
+make install
+
+cd ..
+
+wget http://fallabs.com/kyotocabinet/javapkg/kyotocabinet-java-1.22.tar.gz
+tar -xvf kyotocabinet-java-1.22.tar.gz 
+cd kyotocabinet-java*
+export JAVA_HOME=/usr/lib/jvm/java-6-sun/
+./configure
+make
+make install
+
+export LD_LIBRARY_PATH="/usr/local/lib"
+
+//upload key pair here--see below
+cd ..
+git clone git@github.com:radlab/libfreecake.git
+cd libfreecake/lipstick
+
+//mkdir -p /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents
+//ln -s /usr/lib/jvm/java-6-sun /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+
+
+
+
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAmh3wTxMNmxJPNDvqrlBdsmfJ42kWfGfhvezvaSir5qHC4hwD
+MTCSlWzofVpflZPq7w1oGeHcNvpzrKtz8I7LXxR8aIxNcPfhHR7CV3htR8q6Jpwu
+6QbfbawxNpGEKWg7YruL+1+iYrwBXb6PVEvxLuVL1UdFMjrU6Y1xz/Z77RkMW4Es
+w3gwkpAekZQZ6iB+2M75s6UrVcE3C9W8RoTjMezIuMITnFc5Z0PDjQKxdO3ZB2qb
+1ksubqgKVApwYRJWTeN92+0lKKHQSkPKHi1N6tIjrYV5nArU5Z5UnaR4Pmw13ocY
+L5S8Q3D6QDg1orCHPdh4akdUGTEDKgUFQ89mNQIDAQABAoIBAGfNVGceESLqMRig
+Zo+jp4gbKbqWtEN0gHI4nIP6ldWQDD/Y2DmQWpp0MR8E+K45Y5pBMGWGX5lUFQcu
+r7dNpiLTHHwaS6qT+jZv2jup7AjXvYt11I61R1WKDdeQKTDueFkmssDLiAbyVAU8
+7TK8t6R7YhkzmKKdR3xK/WYxwQROuBYiXtpOjGY/4W7+cMPSxg/1xwByzrV3XaBB
+Wat4AXjfSiqIm5S7V3SIlXn6reJdWv8NVdrYywH5TY9vf07Z4gbxOpa8MJGIzpvm
+qBYqhlxEk4FeJnaDyTJ1bNrP1i9HtoKnV1lZIr+fQHvGxNoSLH4nRiZiy88aPLg3
+WGiv8KECgYEAx7BsALQnb7lgmdPhnGcmS4563q++6NSW6lzvgcE66vUwNPVHfZGT
+JvgSWpoStWCIwe+YgIgh97rc96pHYlmpHwyHVTBMfDEToVKqXu1jBnmeiD5QSmSK
+lMfPNR86H9XzNP+3POutP7SfoBIyvb+o7kefmpqBduyVKmKtOcbp9R0CgYEAxZOn
+zarescDR5ERS8X2NNY3BbZshfva4/gaFEAWzH1yuo/r0C+BUqSG9OgD3PCdCc/Ky
+Efp/gDycF9OHwWKgPj0xxDuz03BmQJ33CS8pp/vFj6ZjGc/7h0I4nC2PKUSvF3al
+cDBos3VRI9TiyfO6AF3hMq9UjOEh7ztqa2fgYfkCgYBN9bCUrcDfu23dYH0qRJMM
+2Hlbyx0rZSPuJ45SCBBqfoLtifz5JwZeJmdz+8bmDOQXYuUU+RDZ2JhAELiByyNd
+vdRwC8UwjzBswQtGuEL62ixsYHeUM6Bu6XsZ8DEPEMY8oMD3BcPDpU7UfYZV0iev
+r0K+Zye4ODEcNR4P+nqIeQKBgDVwcIyiUMWHP74b9Ms4iD8Z7l10/iRXG0YqAUeK
+Ix6ydNIJiITF0mBErefIZxawD7tIw301YdMPkbCoGCnoQStUZeeLtmHUHvQPRcgI
+J5417QOjn15V8NRuxt0HPZeN6kXQY4LqtQcFDkNAy26QK5j5y3VoEthf9Eu+qFQQ
+rpIRAoGBAIhpTmUiyARfWIUK3Holc1gHz6KcrkYaBMM1TQVaKxpF9SztMLp7C9bV
+XUewzyiNt6JGiTN+fVsVY4Xzr+BzdVkJWSeuTd3j6VtUYD04+HadxSVuA2neYobj
+BTnj7CnU+WZ1RjsKXgUUxfTc7cCJYn4hFijOUtjLsBg9aBziIf2D
+-----END RSA PRIVATE KEY-----
+
+
+Cassandra stufff:
+conf/cassandra.yaml -- SimpleSnitch -> Ec2Snitch
+conf/cassandra.yaml -- /var/log --> /mnt/md0
+
+
+---
+
+SEC GROUPS
+
+22 (SSH)	0.0.0.0/0	Delete
+80 (HTTP)	0.0.0.0/0	Delete
+1024 - 65535	0.0.0.0/0	Delete
+6868	0.0.0.0/0	Delete
+6969	0.0.0.0/0	Delete
+7000	0.0.0.0/0	Delete
+7199	0.0.0.0/0	Delete
+8888	0.0.0.0/0	Delete
+9160	0.0.0.0/0	Delete

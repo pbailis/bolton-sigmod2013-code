@@ -1,0 +1,25 @@
+option java_outer_classname = "DWProto";
+
+message DataWrapperMsg {
+        required bytes value = 1;
+        required int64 timestamp = 2;
+        optional KeyDependencySetMsg kds = 3;
+}
+
+message KeyDependencySetMsg {
+        repeated KDSEntryMsg entries = 1;
+}
+
+message KDSEntryMsg {
+        required string key = 1; 
+        optional WriteClockMsg wc = 2;
+}
+
+message WriteClockMsg {
+        repeated ClockEntryMsg entries = 1;
+}
+
+message ClockEntryMsg {
+        required string writer = 1;
+        required int64 value = 2;
+}

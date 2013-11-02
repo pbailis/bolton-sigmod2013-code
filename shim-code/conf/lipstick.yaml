@@ -1,0 +1,38 @@
+localstore.class: edu.berkeley.lipstick.localstore.ConcurrentLocalStore
+#localstore.class: edu.berkeley.lipstick.localstore.KyotoLocalStore
+
+#localstore.kyoto.filepath: lipstick.kch
+
+storage.class: edu.berkeley.lipstick.storage.PooledCassandraStorage
+#storage.class: edu.berkeley.lipstick.storage.SimpleServerStorage
+#storage.class: edu.berkeley.lipstick.storage.DummyStorage
+
+backend.class: edu.berkeley.lipstick.backend.AsynchronousReadExplicitBackend
+#backend.class: edu.berkeley.lipstick.backend.ECExplicitBackend
+
+backend.asyncresolve: true
+
+backend.async.sleepms: 100
+
+backend.maxsyncECDSreads: infinity
+
+#dw.serializer.class: edu.berkeley.lipstick.util.serializer.GzipKryoDWSerializer
+#dw.serializer.class: edu.berkeley.lipstick.util.serializer.CustomDWSerializer
+#dw.serializer.class: edu.berkeley.lipstick.util.serializer.KryoDWSerializer
+#dw.serializer.class: edu.berkeley.lipstick.util.serializer.ProtoDWSerializer
+dw.serializer.class: edu.berkeley.lipstick.util.serializer.SnappyProtoDWSerializer
+#dw.serializer.class: edu.berkeley.lipstick.util.serializer.SimpleDWSerializer
+#dw.serializer.class: edu.berkeley.lipstick.util.SimpleDWCompressor
+
+#Used for simple storage server
+simple.storage.port: 7911
+simple.storage.host: localhost
+
+#Used for Cassandra
+cassandra.consistencylevel: ONE
+cassandra.node.ip: 127.0.0.1
+cassandra.node.port: 9160
+cassandra.keyspace: "usertable"
+cassandra.columnfamily: "data"
+
+lipstick.pid: "8"

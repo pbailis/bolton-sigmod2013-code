@@ -1,0 +1,1 @@
+protoc DataWrapper.proto --java_out=build/gen

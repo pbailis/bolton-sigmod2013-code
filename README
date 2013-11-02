@@ -1,0 +1,16 @@
+
+This repository contains code used to produce the results in "Bolt-on
+Causal Consistency" by Peter Bailis, Ali Ghodsi, Joseph
+M. Hellerstein, and Ion Stoica, appearing in SIGMOD 2013.
+
+Towards the goal of openness in science, this code is licensed under
+the terms of CRAPL v0 BETA 1 (CRAPL-LICENSE.txt) and The Apache
+License Version 2.0 (APACHE-LICENSE.txt). The goal of this code
+release is full disclosure and *not* architectural elegance, good
+design, or good coding practices. This code is not remotely
+production-ready and is fairly ugly in many places. Anyone considering
+use of this technology should read Section 7 of the paper and/or
+contact the authors for more details/consultation.
+
+Please contact pbailis@cs.berkeley.edu for any questions.
+

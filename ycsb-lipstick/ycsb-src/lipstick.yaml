@@ -1,0 +1,36 @@
+localstore.class: edu.berkeley.lipstick.localstore.ConcurrentLocalStore
+#localstore.class: edu.berkeley.lipstick.localstore.KyotoLocalStore
+
+#localstore.kyoto.filepath: lipstick.kch
+
+storage.class: edu.berkeley.lipstick.storage.PooledCassandraStorage
+#storage.class: edu.berkeley.lipstick.storage.SimpleServerStorage
+#storage.class: edu.berkeley.lipstick.storage.DummyStorage
+
+backend.class: edu.berkeley.lipstick.backend.AsynchronousReadExplicitBackend
+#backend.class: edu.berkeley.lipstick.backend.ECExplicitBackend
+
+backend.asyncresolve: true
+
+backend.read.localonly: false
+
+backend.async.sleepms: 100
+backend.maxsyncECDSreads: 1
+
+backend.maxBufferedWrites: 1000
+backend.maxKeysToCheck: 1000
+
+dw.serializer.class: edu.berkeley.lipstick.util.serializer.SnappyProtoDWSerializer
+
+#Used for simple storage server
+simple.storage.port: 7911
+simple.storage.host: localhost
+
+#Used for Cassandra
+cassandra.consistencylevel: ONE
+cassandra.node.ip: 127.0.0.1
+cassandra.node.port: 9160
+cassandra.keyspace: "usertable"
+cassandra.columnfamily: "data"
+
+lipstick.pid: "8"

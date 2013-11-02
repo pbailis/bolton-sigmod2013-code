@@ -1,0 +1,48 @@
+
+To change for each server:
+
+In lipstick.yaml:
+
+localstore.kyoto.filepath: 
+	put this on /mnt/md0
+
+backend.class: 
+	edu.berkeley.lipstick.backend.AsynchronousReadPotentialBackend
+	edu.berkeley.lipstick.backend.AsynchronousReadExplicitBackend
+
+cassandra.node.ip: 
+cassandra.node.port: 
+
+lipstick.pid
+
+
+-------
+
+In clientconfig.yaml:
+
+cops.numservers:
+cops.threads.per.server: 10
+cops.clients.per.server: 1024
+cops.keygroupvariance: 1
+cops.numoperations: 1000000
+cops.clientid: 1
+cops.print.sleeptime: 1000
+server.number: 0
+
+date-time/T-C-V/server/
+
+5 minutes per
+reset after 1 minute
+
+POTENTIAL:
+for threads.per.server in [16, 64, 32]:
+	for clients.per.server in [64, 512, 1024, 2048]:
+		for variance in [1/64, 1/8, 1, 8, 64]:
+
+EXPLICIT:
+for threads.per.server in [16, 64, 32]:
+	for clients.per.server in [64, 512, 1024, 2048]:
+		for lmbda in [2, 4, 16, 32]:
+
+//storage
+nodetool -h <CASSANDRA> cfstats
